@@ -1,8 +1,18 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{A0418497-4C7B-1C79-4246-E2B4EB634330}",
+	"EngineAssociation": "{74EC6064-4A8C-B5CF-6DD7-C797D0B29C16}",
 	"Category": "",
 	"Description": "",
+	"Modules": [
+		{
+			"Name": "GGJ2024",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	],
 	"Plugins": [
 		{
 			"Name": "ModelingToolsEditorMode",

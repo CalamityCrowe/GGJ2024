@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Base_Character.generated.h"
+#include "Base_Enemy.generated.h"
 
 UCLASS()
-class GGJ2024_API ABase_Character : public ACharacter
+class GGJ2024_API ABase_Enemy : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	ABase_Character();
+	ABase_Enemy();
 
 protected:
 	// Called when the game starts or when spawned
@@ -25,6 +25,5 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 
 };

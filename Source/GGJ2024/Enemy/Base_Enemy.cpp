@@ -3,12 +3,21 @@
 
 #include "Base_Enemy.h"
 
+#include "Components/BoxComponent.h"
+
 // Sets default values
 ABase_Enemy::ABase_Enemy()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+
+	EnemyMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("LitterMesh"));
+	RootComponent = EnemyMesh;
+
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>(FName("BoxCollider"));
+	BoxComponent->SetupAttachment(GetRootComponent());
+	
 }
 
 // Called when the game starts or when spawned

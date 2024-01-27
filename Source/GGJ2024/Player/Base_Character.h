@@ -4,7 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "InputActionValue.h"
 #include "Base_Character.generated.h"
+
+
+
+class UInputAction;
+class UInputMappingContext;
 
 UCLASS()
 class GGJ2024_API ABase_Character : public ACharacter
@@ -19,6 +25,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, Category = Input);
+	UInputAction* PlayerMovement;
+
+	UPROPERTY(EditAnywhere, Category = Input);
+	UInputMappingContext* PlayerContexMapping;
+
+	void Move(const FInputActionValue& Value);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

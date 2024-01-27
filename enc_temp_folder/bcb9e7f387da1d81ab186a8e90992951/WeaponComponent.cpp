@@ -31,7 +31,3 @@ void AWeaponComponent::Tick(float DeltaTime)
 
 }
 
-void AWeaponComponent::SpawnProjectile()
-{
-}
-

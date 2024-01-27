@@ -25,6 +25,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallabale)
+	void SpawnEnemy(); 
+
+
 private:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category="Enemy Reference", meta = (AllowPrivateAccess = true))
 	TSubclassOf<ABase_Enemy> EnemyRef;

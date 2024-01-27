@@ -8,8 +8,7 @@
 #include "Base_Character.generated.h"
 
 
-class USpringArmComponent;
-class UCameraComponent;
+
 class UInputAction;
 class UInputMappingContext;
 
@@ -40,11 +39,5 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
-private:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
-	TObjectPtr<UCameraComponent> Camera;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
-	TObjectPtr<USpringArmComponent> SpringArm; 
 
 };

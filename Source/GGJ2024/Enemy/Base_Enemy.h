@@ -33,5 +33,5 @@ private:
 	TObjectPtr<ABase_EnemyController> EnemyController;
 
 
-	bool IsInRange();
+	bool IsInRange() const ;
 };

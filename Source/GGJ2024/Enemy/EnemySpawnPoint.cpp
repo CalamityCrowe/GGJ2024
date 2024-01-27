@@ -36,7 +36,7 @@ void AEnemySpawnPoint::SpawnEnemy()
 
 	if (ABase_Enemy* newEnemy = GetWorld()->SpawnActor<ABase_Enemy>(EnemyRef, newLoc, newRot, SpawnParams))
 	{
-
+		newEnemy->AssignAIController(); 
 	}
 
 }

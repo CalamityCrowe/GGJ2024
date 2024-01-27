@@ -8,7 +8,7 @@
 
 class ADefendPoint;
 /**
- * 
+ *
  */
 UCLASS()
 class GGJ2024_API ABase_EnemyController : public AAIController
@@ -17,17 +17,19 @@ class GGJ2024_API ABase_EnemyController : public AAIController
 public:
 	ABase_EnemyController();
 protected:
-	virtual void BeginPlay() override; 
+	virtual void BeginPlay() override;
 
-	virtual void Tick(float DeltaSeconds) override; 
+	virtual void Tick(float DeltaSeconds) override;
 
 public:
 
-	void MoveEnemy(); 
+	void MoveEnemy();
+
+	TObjectPtr<AActor> GetTarget()const { return TargetPoint; }
 
 private:
-	
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Target Actor", meta = (AllowPrivateAccess = true))
-	TObjectPtr<ADefendPoint> TargetPoint; 
-	
+	TObjectPtr<AActor> TargetPoint;
+
 };

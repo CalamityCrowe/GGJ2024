@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Base_Enemy.generated.h"
 
-class UBoxComponent;
+class ABase_EnemyController;
 
 UCLASS()
 class GGJ2024_API ABase_Enemy : public ACharacter
@@ -16,23 +16,22 @@ class GGJ2024_API ABase_Enemy : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ABase_Enemy();
-	double DamageValue = 6.f;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* EnemyMesh;
-	UPROPERTY(VisibleAnywhere)
-	UBoxComponent* BoxComponent;
-
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void AssignAIController();
+private:
+	TObjectPtr<ABase_EnemyController> EnemyController;
+
+
+	bool IsInRange() const;
 };

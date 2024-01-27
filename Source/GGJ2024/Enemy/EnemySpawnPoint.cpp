@@ -3,10 +3,12 @@
 
 #include "EnemySpawnPoint.h"
 
+#include "Base_Enemy.h"
+
 // Sets default values
 AEnemySpawnPoint::AEnemySpawnPoint()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -15,13 +17,27 @@ AEnemySpawnPoint::AEnemySpawnPoint()
 void AEnemySpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
 void AEnemySpawnPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+}
+
+void AEnemySpawnPoint::SpawnEnemy()
+{
+	const FVector newLoc = GetActorLocation();
+	const FRotator newRot = GetActorRotation();
+
+	FActorSpawnParameters SpawnParams;
+
+	if (ABase_Enemy* newEnemy = GetWorld()->SpawnActor<ABase_Enemy>(EnemyRef, newLoc, newRot, SpawnParams))
+	{
+		newEnemy->AssignAIController();
+	}
 
 }
 

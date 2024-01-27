@@ -12,8 +12,8 @@ UCLASS()
 class GGJ2024_API AEnemySpawnPoint : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AEnemySpawnPoint();
 
@@ -21,12 +21,16 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
+	void SpawnEnemy();
+
+
 private:
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category="Enemy Reference", meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy Reference", meta = (AllowPrivateAccess = true))
 	TSubclassOf<ABase_Enemy> EnemyRef;
 
 };

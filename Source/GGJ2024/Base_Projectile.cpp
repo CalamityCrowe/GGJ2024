@@ -50,5 +50,6 @@ void ABase_Projectile::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 			TempEnemy->DestroyEnemy(); // destroys the enemy if they are dead along with their controller 
 		}
 	}
+	Destroy(); 
 }
 

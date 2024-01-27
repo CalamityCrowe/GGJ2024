@@ -8,7 +8,8 @@
 #include "Base_Character.generated.h"
 
 
-
+class USpringArmComponent;
+class UCameraComponent;
 class UInputAction;
 class UInputMappingContext;
 
@@ -25,11 +26,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = Input);
+	UPROPERTY(EditDefaultsOnly, Category = "Input");
 	UInputAction* PlayerMovement;
 
-	UPROPERTY(EditAnywhere, Category = Input);
-	UInputMappingContext* PlayerContexMapping;
+	UPROPERTY(EditDefaultsOnly, Category = "Input");
+	UInputMappingContext* PlayerContextMapping;
 
 	void Move(const FInputActionValue& Value);
 public:	
@@ -39,5 +40,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+
+private:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UCameraComponent> Camera;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
+	TObjectPtr<USpringArmComponent> SpringArm; 
 
 };

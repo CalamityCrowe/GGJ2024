@@ -26,12 +26,16 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = Input);
-	UInputAction* PlayerMovement;
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "Input",meta = (AllowPrivateAccess = true))
+	UInputAction* PlayerMovement; // this is fine, but unreal has its own pointers that can be used
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "Input",meta = (AllowPrivateAccess = true))
+	UInputMappingContext* PlayerContextMapping;
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "Input",meta = (AllowPrivateAccess = true))
+	TObjectPtr<UInputAction> IA_TurnPlayer;  // this is one of the way's you can declare pointers
 
-	UPROPERTY(EditAnywhere, Category = Input);
-	UInputMappingContext* PlayerContexMapping;
-
+private:
+	void AimPlayer(const FInputActionValue& Value); 
+	void FireWeapon(const FInputActionValue& Value); 
 	void Move(const FInputActionValue& Value);
 public:	
 	// Called every frame

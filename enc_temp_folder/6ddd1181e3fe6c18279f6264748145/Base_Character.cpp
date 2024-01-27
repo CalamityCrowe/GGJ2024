@@ -9,7 +9,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Kismet/KismetMathLibrary.h"
+
 
 // Sets default values
 ABase_Character::ABase_Character()
@@ -83,25 +83,9 @@ void ABase_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	if (UEnhancedInputComponent* EnhancedInput = CastChecked< UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInput->BindAction(PlayerMovement, ETriggerEvent::Triggered, this, &ABase_Character::Move);
-		EnhancedInput->BindAction(IA_TurnPlayer, ETriggerEvent::Triggered, this, &ABase_Character::AimPlayer); 
 
 
 	}
-}
-
-void ABase_Character::AimPlayer(const FInputActionValue& Value)
-{
-		FVector2D InputDir = Value.Get<FVector2D>();
-
-		FVector PointDirection = FVector(InputDir.X, InputDir.Y, 0);
-
-		FRotator lookAtDir = FRotator(0, PointDirection.Rotation().Yaw, 0);
-
-		GetMesh()->SetRelativeRotation(lookAtDir);
-}
-
-void ABase_Character::FireWeapon(const FInputActionValue& Value)
-{
 }
 
 void ABase_Character::Move(const FInputActionValue& Value)

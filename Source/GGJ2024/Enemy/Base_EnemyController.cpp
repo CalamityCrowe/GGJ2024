@@ -27,9 +27,8 @@ void ABase_EnemyController::Tick(float DeltaSeconds)
 	{
 		if (TargetPoint = UGameplayStatics::GetActorOfClass(GetWorld(), ADefendPoint::StaticClass()))
 		{
-			GEngine->AddOnScreenDebugMessage(22, 2, FColor::Emerald, TEXT("Target Point Assigned")); 
+				GEngine->AddOnScreenDebugMessage(22,2,FColor::Emerald,TEXT())
 		}
-		else{}
 	}
 }
 

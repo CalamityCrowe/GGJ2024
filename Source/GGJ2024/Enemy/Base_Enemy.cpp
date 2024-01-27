@@ -8,7 +8,7 @@
 // Sets default values
 ABase_Enemy::ABase_Enemy()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -17,20 +17,16 @@ ABase_Enemy::ABase_Enemy()
 void ABase_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 }
 
 // Called every frame
 void ABase_Enemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (EnemyController && IsInRange() == false)
+	if (EnemyController && IsInRange())
 	{
-		EnemyController->MoveEnemy();
-	}
-	else
-	{
-		// do enemy attack logic here
+		EnemyController->MoveEnemy(); 
 	}
 }
 
@@ -38,23 +34,24 @@ void ABase_Enemy::Tick(float DeltaTime)
 void ABase_Enemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	
 
 }
 
 void ABase_Enemy::AssignAIController()
 {
-	if (GetController())
+	if(GetController())
 	{
 		if (EnemyController = Cast<ABase_EnemyController>(GetController()))
 		{
-			GEngine->AddOnScreenDebugMessage(2, 3, FColor::Purple, TEXT("Controller Assigned"));
+			GEngine->AddOnScreenDebugMessage(2, 3, FColor::Purple, TEXT("Controller Assigned")); 
 		}
 	}
 }
 
-bool ABase_Enemy::IsInRange() const
+bool ABase_Enemy::IsInRange()
 {
-	return	(GetActorLocation().SquaredLength() - EnemyController->GetTarget()->GetActorLocation().SquaredLength()) < 200;
+	return
+	(GetActorLocation().SquaredLength() - EnemyController->GetTarget()
+		)
 }
 

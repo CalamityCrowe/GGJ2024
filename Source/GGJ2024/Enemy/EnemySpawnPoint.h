@@ -26,7 +26,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallabale)
-	void SpawnEnemy();
+	void SpawnEnemy(); 
 
 
 private:

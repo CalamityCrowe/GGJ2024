@@ -4,18 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "EnemySpawnPoint.generated.h"
-
-class ABase_Enemy;
+#include "MyActor.generated.h"
 
 UCLASS()
-class GGJ2024_API AEnemySpawnPoint : public AActor
+class GGJ2024_API AMyActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AEnemySpawnPoint();
+	AMyActor();
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,9 +22,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-private:
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category="Enemy Reference", meta = (AllowPrivateAccess = true))
-	TSubclassOf<ABase_Enemy> EnemyRef;
 
 };

@@ -6,14 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "WeaponComponent.generated.h"
 
-UENUM(BlueprintType)
-enum EWeaponType: uint8
-{
-	Bow  UMETA(DisplayName = "Player Bow"), 
-	Bomb UMETA(DisplayName = "Kitty Bomb"), 
-	
-};
-
 UCLASS()
 class GGJ2024_API AWeaponComponent : public AActor
 {
@@ -30,15 +22,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-
-
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly,Category = "Mesh", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Spawn Point", meta = (AllowPrivateAccess = true))
-	TObjectPtr<USceneComponent> SpawnPoint;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Spawn Point", meta = (AllowPrivateAccess = true))
-	
-
+	TObjectPtr<USceneComponent> SpawnPoint; 
 };

@@ -53,12 +53,6 @@ void ABase_Enemy::AssignAIController()
 	}
 }
 
-void ABase_Enemy::DestroyEnemy()
-{
-	EnemyController->Destroy();
-	Destroy(); 
-}
-
 bool ABase_Enemy::IsInRange() const
 {
 	return	(GetActorLocation().SquaredLength() - EnemyController->GetTarget()->GetActorLocation().SquaredLength()) < 200;

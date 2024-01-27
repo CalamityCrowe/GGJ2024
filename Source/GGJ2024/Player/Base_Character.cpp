@@ -9,20 +9,30 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ABase_Character::ABase_Character()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 
 	SpringArm = CreateOptionalDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	SpringArm->SetupAttachment(GetCapsuleComponent()); 
+	SpringArm->SetupAttachment(GetCapsuleComponent());
 
 	Camera = CreateOptionalDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
+
+	SpringArm->TargetArmLength = 800;
+	SpringArm->SocketOffset = FVector(0, 0, 690);
+	SpringArm->bInheritPitch = false;
+	SpringArm->bInheritRoll = false;
+	SpringArm->bInheritYaw = false;
+
+
+	Camera->SetRelativeRotation(FRotator(-40, 0, 0));
+
 
 	// not quite sure what is happening here, these should probably be set in the editor so it is easier to manage
 
@@ -41,12 +51,13 @@ ABase_Character::ABase_Character()
 void ABase_Character::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	if (const APlayerController* PlayerController = Cast<APlayerController>(GetController())) {
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer())) {
-			Subsystem->AddMappingContext(PlayerContexMapping, 1);
-		}
-	}
+
+	// don't do this on begin play, that's why you have a setup inputs function to override
+	//if (const APlayerController* PlayerController = Cast<APlayerController>(GetController())) {
+	//	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer())) {
+	//		Subsystem->AddMappingContext(PlayerContextMapping, 1);
+	//	}
+	//}
 }
 
 // Called every frame
@@ -61,12 +72,36 @@ void ABase_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	if (const APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			Subsystem->AddMappingContext(PlayerContextMapping, 1);
+		}
+	}
+
 	if (UEnhancedInputComponent* EnhancedInput = CastChecked< UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInput->BindAction(PlayerMovement, ETriggerEvent::Triggered, this, &ABase_Character::Move);
-		
+		EnhancedInput->BindAction(IA_TurnPlayer, ETriggerEvent::Triggered, this, &ABase_Character::AimPlayer); 
+
 
 	}
+}
+
+void ABase_Character::AimPlayer(const FInputActionValue& Value)
+{
+		FVector2D InputDir = Value.Get<FVector2D>();
+
+		FVector PointDirection = FVector(InputDir.X, InputDir.Y, 0);
+
+		FRotator lookAtDir = FRotator(0, PointDirection.Rotation().Yaw, 0);
+
+		GetMesh()->SetRelativeRotation(lookAtDir);
+}
+
+void ABase_Character::FireWeapon(const FInputActionValue& Value)
+{
 }
 
 void ABase_Character::Move(const FInputActionValue& Value)

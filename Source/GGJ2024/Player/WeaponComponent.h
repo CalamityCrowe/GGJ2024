@@ -6,12 +6,22 @@
 #include "GameFramework/Actor.h"
 #include "WeaponComponent.generated.h"
 
+class ABase_Projectile;
+
+UENUM(BlueprintType)
+enum EWeaponType : uint8
+{
+	Bow  UMETA(DisplayName = "Player Bow"),
+	Bomb UMETA(DisplayName = "Kitty Bomb"),
+
+};
+
 UCLASS()
 class GGJ2024_API AWeaponComponent : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AWeaponComponent();
 
@@ -19,12 +29,23 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void SpawnProjectile(); 
+
 private:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly,Category = "Mesh", meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Spawn Point", meta = (AllowPrivateAccess = true))
-	TObjectPtr<USceneComponent> SpawnPoint; 
+	TObjectPtr<USceneComponent> SpawnPoint;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ammo Reference", meta = (AllowPrivateAccess = true))
+	TSubclassOf<ABase_Projectile> ArrowRef;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ammo Reference", meta = (AllowPrivateAccess = true))
+	TSubclassOf<ABase_Projectile> GrenadeRef;
+
+	TEnumAsByte<EWeaponType> CurrentWeapon; 
+
 };

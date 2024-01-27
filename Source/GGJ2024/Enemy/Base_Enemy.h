@@ -30,14 +30,30 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void AssignAIController();
+
+	void DamageEnemy(int Damage)
+	{
+		EnemyHealth -= Damage;
+		if (EnemyHealth <= 0) { isDead = true;  }
+	}
+
+
+	bool GetIsDead() const { return isDead;  }
+
+	void DestroyEnemy();
 private:
 	TObjectPtr<ABase_EnemyController> EnemyController;
-
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = true))
 	TObjectPtr<USkeletalMeshComponent> SKMesh;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = true))
-	TObjectPtr<UCapsuleComponent> Collider; 
+	TObjectPtr<UCapsuleComponent> Collider;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category= "Collider", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UCapsuleComponent> AttackCollision; 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = true))
+	int EnemyHealth;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = true))
+	bool isDead; 
 
 	bool IsInRange() const;
 };

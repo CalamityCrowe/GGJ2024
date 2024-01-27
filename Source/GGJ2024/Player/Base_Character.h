@@ -8,6 +8,7 @@
 #include "Base_Character.generated.h"
 
 
+class UWeaponComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputAction;
@@ -26,18 +27,19 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "Input",meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = true))
 	UInputAction* PlayerMovement; // this is fine, but unreal has its own pointers that can be used
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "Input",meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = true))
 	UInputMappingContext* PlayerContextMapping;
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "Input",meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UInputAction> IA_TurnPlayer;  // this is one of the way's you can declare pointers
 
 private:
-	void AimPlayer(const FInputActionValue& Value); 
-	void FireWeapon(const FInputActionValue& Value); 
+	void AimPlayer(const FInputActionValue& Value);
+	void ChargeWeapon(const FInputActionValue& Value);
+	void FireWeapon(const FInputActionValue& Value);
 	void Move(const FInputActionValue& Value);
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -49,6 +51,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UCameraComponent> Camera;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
-	TObjectPtr<USpringArmComponent> SpringArm; 
+	TObjectPtr<USpringArmComponent> SpringArm;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UWeaponComponent> WeaponComponent;
 
 };

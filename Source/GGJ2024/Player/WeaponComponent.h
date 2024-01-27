@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "Components/SceneComponent.h"
 #include "WeaponComponent.generated.h"
 
 class ABase_Projectile;
@@ -17,13 +17,13 @@ enum EWeaponType : uint8
 };
 
 UCLASS()
-class GGJ2024_API AWeaponComponent : public AActor
+class GGJ2024_API UWeaponComponent : public USceneComponent
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AWeaponComponent();
+	UWeaponComponent();
 
 protected:
 	// Called when the game starts or when spawned
@@ -31,9 +31,10 @@ protected:
 
 public:
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION()
+	void AimProjectile(); 
+
 	void SpawnProjectile(); 
 
 private:
@@ -46,6 +47,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ammo Reference", meta = (AllowPrivateAccess = true))
 	TSubclassOf<ABase_Projectile> GrenadeRef;
 
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Trajectory Reference", meta = (AllowPrivateAccess = true))
+	TSubclassOf<AActor> TrajctoryRef;
+
 	TEnumAsByte<EWeaponType> CurrentWeapon; 
+
+	float BowCharge; 
 
 };

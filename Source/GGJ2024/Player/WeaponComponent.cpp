@@ -4,34 +4,50 @@
 #include "WeaponComponent.h"
 
 // Sets default values
-AWeaponComponent::AWeaponComponent()
+UWeaponComponent::UWeaponComponent()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 
 	Mesh = CreateOptionalDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	RootComponent = Mesh;
+	
 
 	SpawnPoint = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Spawn Point"));
-	SpawnPoint->SetupAttachment(Mesh); 
+	SpawnPoint->SetupAttachment(Mesh);
 
 }
 
 // Called when the game starts or when spawned
-void AWeaponComponent::BeginPlay()
+void UWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
 }
 
-// Called every frame
-void AWeaponComponent::Tick(float DeltaTime)
+void UWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType,
+	FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::Tick(DeltaTime);
-
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void AWeaponComponent::SpawnProjectile()
+void UWeaponComponent::AimProjectile()
 {
+	// do the aim logic here
+}
+
+void UWeaponComponent::SpawnProjectile()
+{
+	// do the fire logic
+	switch (CurrentWeapon)
+	{
+	case EWeaponType::Bow:
+
+
+		break;
+
+	case EWeaponType::Bomb:
+
+
+		break;
+	}
 }
 

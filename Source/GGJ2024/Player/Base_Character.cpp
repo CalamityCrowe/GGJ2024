@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "WeaponComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -33,6 +34,10 @@ ABase_Character::ABase_Character()
 
 	Camera->SetRelativeRotation(FRotator(-40, 0, 0));
 
+
+	WeaponComponent = CreateOptionalDefaultSubobject<UWeaponComponent>(TEXT("WeaponSystem"));
+	WeaponComponent->SetupAttachment(GetMesh()); 
+	
 
 	// not quite sure what is happening here, these should probably be set in the editor so it is easier to manage
 
@@ -100,8 +105,14 @@ void ABase_Character::AimPlayer(const FInputActionValue& Value)
 		GetMesh()->SetRelativeRotation(lookAtDir);
 }
 
+void ABase_Character::ChargeWeapon(const FInputActionValue& Value)
+{
+	
+}
+
 void ABase_Character::FireWeapon(const FInputActionValue& Value)
 {
+
 }
 
 void ABase_Character::Move(const FInputActionValue& Value)

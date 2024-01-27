@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "Base_Enemy.generated.h"
 
-class USphereComponent;
 class ABase_EnemyController;
 
 UCLASS()
@@ -33,11 +32,6 @@ public:
 private:
 	TObjectPtr<ABase_EnemyController> EnemyController;
 
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = true))
-	TObjectPtr<USkeletalMeshComponent> SKMesh;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = true))
-	TObjectPtr<UCapsuleComponent> Collider; 
 
 	bool IsInRange() const;
 };

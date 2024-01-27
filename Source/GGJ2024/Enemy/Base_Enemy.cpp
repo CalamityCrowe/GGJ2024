@@ -3,7 +3,7 @@
 
 #include "Base_Enemy.h"
 
-#include "Components/BoxComponent.h"
+#include "Base_EnemyController.h"
 
 // Sets default values
 ABase_Enemy::ABase_Enemy()
@@ -11,13 +11,6 @@ ABase_Enemy::ABase_Enemy()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-
-	EnemyMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("LitterMesh"));
-	RootComponent = EnemyMesh;
-
-	BoxComponent = CreateDefaultSubobject<UBoxComponent>(FName("BoxCollider"));
-	BoxComponent->SetupAttachment(GetRootComponent());
-	
 }
 
 // Called when the game starts or when spawned
@@ -31,7 +24,10 @@ void ABase_Enemy::BeginPlay()
 void ABase_Enemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	if (EnemyController && IsInRange())
+	{
+		EnemyController->MoveEnemy(); 
+	}
 }
 
 // Called to bind functionality to input
@@ -39,5 +35,23 @@ void ABase_Enemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ABase_Enemy::AssignAIController()
+{
+	if(GetController())
+	{
+		if (EnemyController = Cast<ABase_EnemyController>(GetController()))
+		{
+			GEngine->AddOnScreenDebugMessage(2, 3, FColor::Purple, TEXT("Controller Assigned")); 
+		}
+	}
+}
+
+bool ABase_Enemy::IsInRange()
+{
+	return
+	(GetActorLocation().SquaredLength() - EnemyController->GetTarget()
+		)
 }
 

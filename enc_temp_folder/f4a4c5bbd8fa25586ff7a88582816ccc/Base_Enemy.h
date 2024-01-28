@@ -52,17 +52,8 @@ private:
 	TObjectPtr<UCapsuleComponent> AttackCollision; 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = true))
 	int EnemyHealth;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage", meta = (AllowPrivateAccess = true))
-	float EnemyDamage;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = true))
 	bool isDead; 
 
 	bool IsInRange() const;
-
-private:
-
-	UFUNCTION()
-	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 };

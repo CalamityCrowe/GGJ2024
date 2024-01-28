@@ -19,20 +19,20 @@
 AWeaponComponent::AWeaponComponent()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true; 
+	PrimaryActorTick.bCanEverTick = true;
 	Mesh = CreateOptionalDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon Mesh"));
 	RootComponent = Mesh;
 
 	SpawnPoint = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Spawn Point"));
 	SpawnPoint->SetupAttachment(Mesh);
-	BowCharge = 0; 
+	BowCharge = 0;
 }
 
 // Called when the game starts or when spawned
 void AWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	CurrentWeapon = EWeaponType::Bow; 
+	CurrentWeapon = EWeaponType::Bow;
 }
 
 
@@ -40,7 +40,7 @@ void AWeaponComponent::BeginPlay()
 void AWeaponComponent::AimProjectile()
 {
 
-	FVector StartPos = GetActorLocation();
+	FVector StartPos = SpawnPoint->GetComponentLocation();
 	// Convert the vector components to a string
 	FString StartPosString = FString::Printf(TEXT("StartPos: X=%.2f, Y=%.2f, Z=%.2f"), StartPos.X, StartPos.Y, StartPos.Z);
 
@@ -58,7 +58,7 @@ void AWeaponComponent::AimProjectile()
 	{
 	case EWeaponType::Bow:
 
-		BowCharge += GetWorld()->GetDeltaSeconds() * 500;
+		BowCharge += GetWorld()->GetDeltaSeconds() * 1000;
 		if (BowCharge > 3000)
 		{
 			BowCharge = 3000;
@@ -74,7 +74,7 @@ void AWeaponComponent::AimProjectile()
 
 	}
 
-	
+
 	FPredictProjectilePathParams PredictParams(0.0f, StartPos, LaunchVelocity, 2.0f, ECollisionChannel::ECC_Visibility);
 
 	if (UGameplayStatics::PredictProjectilePath(this, PredictParams, PredictResult))
@@ -98,8 +98,8 @@ void AWeaponComponent::SpawnProjectile()
 {
 	// do the fire logic
 
-	FVector SpawnPos = GetActorLocation();
-	FRotator SpawnRot = GetActorRotation();
+	FVector SpawnPos = SpawnPoint->GetComponentLocation();
+	FRotator SpawnRot = SpawnPoint->GetComponentRotation();
 
 	FActorSpawnParameters SpawnParamets;
 
@@ -112,7 +112,7 @@ void AWeaponComponent::SpawnProjectile()
 		{
 			FVector LaunchVelocity = (-SpawnPoint->GetForwardVector()) * BowCharge;
 
-			TempProjectile->GetProjectileMovementComponent()->Velocity = LaunchVelocity; 
+			TempProjectile->GetProjectileMovementComponent()->Velocity = LaunchVelocity;
 		}
 		break;
 
@@ -144,8 +144,8 @@ void AWeaponComponent::BindWeaponInputs(ABase_Character* PlayerRef)
 		{
 			//PEI->BindAction(WeaponInputData->IaFireWeapon,ETriggerEvent::Triggered,this)
 			PEI->BindAction(PlayerRef->IA_Shoot, ETriggerEvent::Triggered, this, &AWeaponComponent::AimProjectile);
- 			PEI->BindAction(PlayerRef->IA_Shoot, ETriggerEvent::Completed, this, &AWeaponComponent::SpawnProjectile);
-	
+			PEI->BindAction(PlayerRef->IA_Shoot, ETriggerEvent::Completed, this, &AWeaponComponent::SpawnProjectile);
+
 
 			GEngine->AddOnScreenDebugMessage(1, 2, FColor::Purple, TEXT("WeaponBOund"));
 		}

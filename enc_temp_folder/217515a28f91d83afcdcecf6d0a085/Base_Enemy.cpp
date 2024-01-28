@@ -4,7 +4,6 @@
 #include "Base_Enemy.h"
 
 #include "Base_EnemyController.h"
-#include "GGJ2024/Tower/DefendPoint.h"
 
 // Sets default values
 ABase_Enemy::ABase_Enemy()
@@ -57,19 +56,11 @@ void ABase_Enemy::AssignAIController()
 void ABase_Enemy::DestroyEnemy()
 {
 	EnemyController->Destroy();
-	Destroy();
+	Destroy(); 
 }
 
 bool ABase_Enemy::IsInRange() const
 {
 	return	(GetActorLocation().SquaredLength() - EnemyController->GetTarget()->GetActorLocation().SquaredLength()) < 200;
-}
-
-void ABase_Enemy::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if(ADefendPoint* TempDefend = Cast<ADefendPoint>(OtherActor))
-	{
-		TempDefend->DamageDefendPoint(EnemyDamage); 
-	}
 }
 

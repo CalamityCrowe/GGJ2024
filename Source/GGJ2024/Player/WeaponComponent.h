@@ -3,9 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/SceneComponent.h"
+#include "GameFramework/Actor.h"
 #include "WeaponComponent.generated.h"
 
+class ABase_Character;
 class ABase_Projectile;
 
 UENUM(BlueprintType)
@@ -17,13 +18,13 @@ enum EWeaponType : uint8
 };
 
 UCLASS()
-class GGJ2024_API UWeaponComponent : public USceneComponent
+class GGJ2024_API AWeaponComponent : public AActor
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	UWeaponComponent();
+	AWeaponComponent();
 
 protected:
 	// Called when the game starts or when spawned
@@ -31,7 +32,6 @@ protected:
 
 public:
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AimProjectile(); 
 
@@ -53,6 +53,10 @@ private:
 
 	TEnumAsByte<EWeaponType> CurrentWeapon; 
 
-	float BowCharge; 
+	float BowCharge;
+
+public:
+	UFUNCTION()
+	void BindWeaponInputs(ABase_Character* PlayerRef);
 
 };

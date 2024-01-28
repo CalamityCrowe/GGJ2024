@@ -58,7 +58,7 @@ void AWeaponComponent::AimProjectile()
 	{
 	case EWeaponType::Bow:
 
-		BowCharge += GetWorld()->GetDeltaSeconds() * 500;
+		BowCharge += GetWorld()->GetDeltaSeconds() * 200;
 		if (BowCharge > 3000)
 		{
 			BowCharge = 3000;

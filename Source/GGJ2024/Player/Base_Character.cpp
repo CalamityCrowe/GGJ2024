@@ -35,10 +35,9 @@ ABase_Character::ABase_Character()
 	Camera->SetRelativeRotation(FRotator(-40, 0, 0));
 
 
-	WeaponComponent = CreateOptionalDefaultSubobject<UWeaponComponent>(TEXT("WeaponSystem"));
-	WeaponComponent->SetupAttachment(GetMesh()); 
 	
-
+	WeaponRef = CreateOptionalDefaultSubobject<UChildActorComponent>(TEXT("Weapon Ref"));
+	WeaponRef->SetupAttachment(GetMesh()); 
 	// not quite sure what is happening here, these should probably be set in the editor so it is easier to manage
 
 	/*
@@ -56,6 +55,11 @@ ABase_Character::ABase_Character()
 void ABase_Character::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (AWeaponComponent* baseWeapon = Cast<AWeaponComponent>(WeaponRef->GetChildActor()))
+	{
+		baseWeapon->BindWeaponInputs(this); 
+	}
 
 	// don't do this on begin play, that's why you have a setup inputs function to override
 	//if (const APlayerController* PlayerController = Cast<APlayerController>(GetController())) {
@@ -88,7 +92,7 @@ void ABase_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	if (UEnhancedInputComponent* EnhancedInput = CastChecked< UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInput->BindAction(PlayerMovement, ETriggerEvent::Triggered, this, &ABase_Character::Move);
-		EnhancedInput->BindAction(IA_TurnPlayer, ETriggerEvent::Triggered, this, &ABase_Character::AimPlayer); 
+		EnhancedInput->BindAction(IA_TurnPlayer, ETriggerEvent::Triggered, this, &ABase_Character::AimPlayer);
 
 
 	}
@@ -96,23 +100,30 @@ void ABase_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 void ABase_Character::AimPlayer(const FInputActionValue& Value)
 {
-		FVector2D InputDir = Value.Get<FVector2D>();
+	FVector2D InputDir = Value.Get<FVector2D>();
 
-		FVector PointDirection = FVector(InputDir.X, InputDir.Y, 0);
+	FVector PointDirection = FVector(InputDir.X, InputDir.Y, 0);
 
-		FRotator lookAtDir = FRotator(0, PointDirection.Rotation().Yaw, 0);
+	FRotator lookAtDir = FRotator(0, PointDirection.Rotation().Yaw, 0);
 
-		GetMesh()->SetRelativeRotation(lookAtDir);
+	GetMesh()->SetRelativeRotation(lookAtDir);
 }
 
 void ABase_Character::ChargeWeapon(const FInputActionValue& Value)
 {
+	if (Cast<AWeaponComponent>(WeaponRef))
+	{
+		Cast<AWeaponComponent>(WeaponRef)->AimProjectile();
+	}
 	
 }
 
 void ABase_Character::FireWeapon(const FInputActionValue& Value)
 {
-
+	if (Cast<AWeaponComponent>(WeaponRef))
+	{
+		Cast<AWeaponComponent>(WeaponRef)->SpawnProjectile();
+	}
 }
 
 void ABase_Character::Move(const FInputActionValue& Value)
@@ -127,7 +138,7 @@ void ABase_Character::Move(const FInputActionValue& Value)
 	}
 
 	// in terms of inputs for movement, I get what you are trying to do, but this is overcomplicated for no reason
-
+	// this also looks like AI generated code, don't do this
 
 		//const FVector2D MoveValue = Value.Get<FVector2D>();
 

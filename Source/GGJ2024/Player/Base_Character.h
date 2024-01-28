@@ -8,7 +8,7 @@
 #include "Base_Character.generated.h"
 
 
-class UWeaponComponent;
+class AWeaponComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputAction;
@@ -33,6 +33,7 @@ protected:
 	UInputMappingContext* PlayerContextMapping;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UInputAction> IA_TurnPlayer;  // this is one of the way's you can declare pointers
+  // this is one of the way's you can declare pointers
 
 private:
 	void AimPlayer(const FInputActionValue& Value);
@@ -46,13 +47,17 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UInputAction> IA_Shoot;
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UCameraComponent> Camera;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
 	TObjectPtr<USpringArmComponent> SpringArm;
+
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = true))
-	TObjectPtr<UWeaponComponent> WeaponComponent;
+	TObjectPtr<UChildActorComponent>  WeaponRef;
+	
 
 };

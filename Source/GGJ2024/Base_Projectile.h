@@ -29,6 +29,8 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void ProjectileHitLogic(); 
 
+	UProjectileMovementComponent* GetProjectileMovementComponent() { return ProjectileMovement;  }
+
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category= "Mesh", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UStaticMeshComponent> Mesh;

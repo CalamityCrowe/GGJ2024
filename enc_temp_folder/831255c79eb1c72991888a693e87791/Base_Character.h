@@ -37,7 +37,8 @@ protected:
 
 private:
 	void AimPlayer(const FInputActionValue& Value);
-
+	void ChargeWeapon(const FInputActionValue& Value);
+	void FireWeapon(const FInputActionValue& Value);
 	void Move(const FInputActionValue& Value);
 public:
 	// Called every frame

@@ -64,12 +64,12 @@ void AWeaponComponent::AimProjectile()
 			BowCharge = 3000;
 		}
 
-		LaunchVelocity = (-SpawnPoint->GetForwardVector()) * BowCharge;
+		LaunchVelocity = SpawnPoint->GetForwardVector() * BowCharge;
 
 		break;
 
 	case EWeaponType::Bomb:
-		LaunchVelocity = (-SpawnPoint->GetForwardVector()) * 1500;
+		LaunchVelocity = SpawnPoint->GetForwardVector() * 1500;
 		break;
 
 	}
@@ -110,7 +110,7 @@ void AWeaponComponent::SpawnProjectile()
 	case EWeaponType::Bow:
 		if (ABase_Projectile* TempProjectile = GetWorld()->SpawnActor<ABase_Projectile>(ArrowRef, SpawnPos, SpawnRot, SpawnParamets))
 		{
-			FVector LaunchVelocity = (-SpawnPoint->GetForwardVector()) * BowCharge;
+			FVector LaunchVelocity = SpawnPoint->GetForwardVector() * BowCharge;
 
 			TempProjectile->GetProjectileMovementComponent()->Velocity = LaunchVelocity; 
 		}
@@ -120,7 +120,7 @@ void AWeaponComponent::SpawnProjectile()
 
 		if (ABase_Projectile* TempProjectile = GetWorld()->SpawnActor<ABase_Projectile>(GrenadeRef, SpawnPos, SpawnRot, SpawnParamets))
 		{
-			FVector LaunchVelocity = (-SpawnPoint->GetForwardVector()) * 1500;
+			FVector LaunchVelocity = SpawnPoint->GetForwardVector() * 1500;
 
 			TempProjectile->GetProjectileMovementComponent()->Velocity = LaunchVelocity;
 		}

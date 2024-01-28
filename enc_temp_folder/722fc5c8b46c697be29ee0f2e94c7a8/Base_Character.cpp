@@ -106,12 +106,25 @@ void ABase_Character::AimPlayer(const FInputActionValue& Value)
 
 	FRotator lookAtDir = FRotator(0, PointDirection.Rotation().Yaw, 0);
 
-	FRotator ActualRot = UKismetMathLibrary::RInterpTo(GetMesh()->GetRelativeRotation(), lookAtDir, GetWorld()->GetDeltaSeconds(), 10); 
-
-	GetMesh()->SetRelativeRotation(ActualRot);
+	GetMesh()->SetRelativeRotation(lookAtDir);
 }
 
+void ABase_Character::ChargeWeapon(const FInputActionValue& Value)
+{
+	if (Cast<AWeaponComponent>(WeaponRef))
+	{
+		Cast<AWeaponComponent>(WeaponRef)->AimProjectile();
+	}
+	
+}
 
+void ABase_Character::FireWeapon(const FInputActionValue& Value)
+{
+	if (Cast<AWeaponComponent>(WeaponRef))
+	{
+		Cast<AWeaponComponent>(WeaponRef)->SpawnProjectile();
+	}
+}
 
 void ABase_Character::Move(const FInputActionValue& Value)
 {
